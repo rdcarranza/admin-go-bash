@@ -4,7 +4,6 @@ version=$1
 if [ $EUID -eq 0 ]; then
   echo "Para actualizar GO ejecute sin privilegios este script."
   echo "Intenta con el comando: sh actualizar-go.sh 'x.x.x'"
-  echo "Si esto no funciona, asigne permisos de ejecución al script: chmod +x actualizar-go.sh"
   exit 1
 fi
 
@@ -18,6 +17,7 @@ if [! -d ${HOMEGO/instaladores} ]; then
   mkdir $HOME/go/instaladores
 fi
 
+
 #Descargar instalador.
 if [ -z "$version" ]; then
 archi="go1.21.5.linux-amd64.tar.gz"
@@ -25,12 +25,19 @@ else
 archi="go${version}.linux-amd64.tar.gz"
 fi
 
-URL="https://go.dev/dl/"$archi
-wget -P $HOME/go/instaladores ${URL}
+diri=$HOME/go/instaladores;
 
-if[! -f $HOME/go/instaladores/$archi]; then
-  echo "ERROR: en la descarga del instalador, verifique la versión ingresada y vuelva a intentar"
-  exit 1
+URL="https://go.dev/dl/"$archi;
+wget -N -P $diri ${URL};
+
+diri_archi=$diri"/"$archi;
+#echo $diri_archi;
+if [ -f $diri_archi ];
+then
+    echo "Descarga finalizada correctamente!"    
+else
+    echo "ERROR: en la descarga del instalador, verifique la versión ingresada y vuelva a intentar"
+    exit 1
 fi
 
 
@@ -38,7 +45,6 @@ fi
 
 sh instalar-go.sh "~/go/instaladores"
 
-URL="https://go.dev/dl/go1.21.5.linux-amd64.tar.gz"
 DIR='/usr/local'
 GOROOT="${DIR}/go"
 GOBIN="${GOROOT}/bin"
