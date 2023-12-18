@@ -19,6 +19,7 @@ then
     echo "Descarga finalizada correctamente!"    
 else
     echo "ERROR: en la descarga del instalador, verifique la versión ingresada y vuelva a intentar"
-    exit 1
+    exit 1;
 fi
 
+exit 0;
