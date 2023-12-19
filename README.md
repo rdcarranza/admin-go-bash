@@ -2,4 +2,7 @@
 Script para facilitar la actualización de GO
 
 ## Ejecución
-$sudo actualizar-go.sh
+$ actualizar-go.sh <version>
+
+Ejemplo:
+$ actualizar-go.sh 1.21.5
