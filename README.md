@@ -1,8 +1,11 @@
 # actualizar-go-bash
-Script para facilitar la actualización de GO
+Script para facilitar la instalación y actualización de GO
 
 ## Ejecución
-$ actualizar-go.sh <version>
+```
+$ sh actualizar-go.sh <version>
 
-Ejemplo:
-$ actualizar-go.sh 1.21.5
+**Ejemplo:**
+$ sh actualizar-go.sh 1.21.5
+
+```

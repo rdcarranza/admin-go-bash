@@ -23,7 +23,7 @@ fi
 
 #Descargar instalador.
 
-sh ./descarga-go.sh $version
+sh ./descargar-go.sh $version
 exit_code=$?
 if [ $exit_code = 0 ]; then
   echo "Descarga COMPLETA"
@@ -38,6 +38,14 @@ fi
 goversion=$(go version | cut -d " " -f3 | cut -c 3-);
 #goversion=$(go version | cut -d " " -f3 | sed -e 's/^..//');
 
-sh ./instalar-go.sh ${version} ${HOMEGOI} 
+echo "Se requieren permisos para continuar, ingrese su credencial sudo.";
+sudo sh ./instalar-go.sh ${version} ${HOMEGOI} ${goversion};
+exit_code=$?
+if [ $exit_code = 0 ]; then
+  echo "Instalación COMPLETA."
+else
+  echo "Instalación FALLIDA."
+  exit 1;
+fi
 
 echo "Reinicia tu sesión de usuario para verificar la actualización!";

@@ -19,15 +19,15 @@ GOROOT="${DIR}/go"
 GOBIN="${GOROOT}/bin"
 
 # Verificar si existe una versión anterior
-
+confirm="";
 if [ -d ${GOROOT} ]; then
   if [ $goversion = "" ]; then
-    read -n 2 -p "Desea eliminar la versión instalada? [SI (enter) ó NO]: " confirm;
+    read -p "Desea eliminar la versión instalada? [SI (enter) ó NO]: " $confirm;
   else
-    read -n 2 -p "Desea eliminar la versión: ${goversion}? [SI (enter) ó NO]: " confirm;
+    read -p "Desea eliminar la versión: ${goversion}? [SI (enter) ó NO]: " $confirm;
   fi
-  echo $confirm;
-  if [ $confirm = "n" || $confirm = "no" || $confirm = "NO" || $confirm = "N" ]; then
+  echo "confirmación: "$confirm;
+  if [ $confirm = "n" | $confirm = "no" | $confirm = "NO" | $confirm = "N" ]; then
     echo "Actualización INTERRUMPIDA.";
     exit 2;
   else
