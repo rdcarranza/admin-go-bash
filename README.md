@@ -1,5 +1,5 @@
 # admin-go-bash
-Script para facilitar la instalación y actualización de GO en entornos linux.
+### Script para facilitar la instalación y actualización de GO en entornos Linux. O simplemente, para saltar entre versiones.
 
 ## Ejecución - Actualización
 ```
