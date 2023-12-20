@@ -37,7 +37,7 @@ fi
 #Instalar versión descargada
 goversion=$(go version | cut -d " " -f3 | cut -c 3-);
 #goversion=$(go version | cut -d " " -f3 | sed -e 's/^..//');
-
+sudo -k;
 echo "Se requieren permisos para continuar, ingrese su credencial sudo.";
 sudo sh ./instalar-go.sh ${version} ${HOMEGOI} ${goversion};
 exit_code=$?
@@ -48,4 +48,6 @@ else
   exit 1;
 fi
 
-echo "Reinicia tu sesión de usuario para verificar la actualización!";
+sudo -k
+echo "Reinicia tu sesión de usuario para verificar la instalación o actualización!";
+exit 0;

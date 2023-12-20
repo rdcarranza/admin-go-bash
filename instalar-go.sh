@@ -22,17 +22,24 @@ GOBIN="${GOROOT}/bin"
 confirm="";
 if [ -d ${GOROOT} ]; then
   if [ $goversion = "" ]; then
-    read -p "Desea eliminar la versión instalada? [SI (enter) ó NO]: " $confirm;
+    echo "Se instalará la versión: go${version}!";
+    read -p "Desea eliminar la versión instalada? [SI (enter) ó NO]: " confirm;
   else
-    read -p "Desea eliminar la versión: ${goversion}? [SI (enter) ó NO]: " $confirm;
+    if [ $version = $goversion ];then
+      echo "La versión: go${version} ya se encuentra instalada!";
+      exit 2;
+    else
+      echo "Se reemplazará la versión: go${goversion} por go${version}!";
+      read -p "Desea eliminar la versión: ${goversion}? [SI (enter) ó NO]: " confirm;
+    fi
   fi
   echo "confirmación: "$confirm;
-  if [ $confirm = "n" | $confirm = "no" | $confirm = "NO" | $confirm = "N" ]; then
+  if [ "$confirm" = '' -o "$confirm" = 's' -o "$confirm" = 'si' -o "$confirm" = 'SI' -o "$confirm" = 'S' ]; then
+    
+    rm -fr ${GOROOT:-/usr/local/go}
+  else
     echo "Actualización INTERRUMPIDA.";
     exit 2;
-  else
-    echo "Se reemplazará la versión: go${goversion} por go${version}!";
-    rm -fr ${GOROOT:-/usr/local/go}
   fi
 
 else
