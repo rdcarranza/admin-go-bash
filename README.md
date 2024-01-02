@@ -13,7 +13,22 @@ $ sh actualizar-go.sh 1.21.5
 
 ## Ejecución - Instalación
 ```
-$ sh instalar-go.sh <version> <~/homego>
+$ sh instalar-go.sh <version>
+```
+
+##### De esta manera se crea automaticamente el directorio de trabajo en $HOME/go.
+
+**Ejemplo:**
+```
+$ sh instalar-go.sh 1.21.5 
+```
+
+
+
+## Ejecución - Instalación (Con directorio de trabajo)
+
+```
+$ sh instalar-go.sh <version> <dir_trabajo>
 ```
 
 **Ejemplo:**

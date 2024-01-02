@@ -1,61 +1,81 @@
 #!/bin/bash
-version=$1
-homegoi=$2
-goversion=$3 #parametro opcional.
+version=$1 #parametro requerido
+homegoi=$2 #parametro opcional
 
-#if [ ! $EUID -e 0 ]; then
-if [ ! $(whoami) = "root" ]; then
-  echo "Se requieren permisos ROOT para instalar GO"
-  echo "Intenta con el comando: sudo sh instalar-go.sh"
+
+if [ $(id -u) -eq 0 ]; then
+  echo "Para instalar GO ejecute sin privilegios este script."
+  echo "Intenta con el comando: sh instalar-go.sh 'x.x.x'"
   exit 1
 fi
 
-#verificar si existe alguna versión instalada
+#Validar parametro1
+if [ -z "$version" ]; then
+    echo "ERROR: verifique la versión ingresada y vuelva a intentar."
+    exit 1;
+fi
 
-#si existe versión instalada pedir confirmación y eliminarla.
+#Configuración de usuario
 
-DIR='/usr/local'
-GOROOT="${DIR}/go"
-GOBIN="${GOROOT}/bin"
-
-# Verificar si existe una versión anterior
-confirm="";
-if [ -d ${GOROOT} ]; then
-  if [ $goversion = "" ]; then
-    echo "Se instalará la versión: go${version}!";
-    read -p "Desea eliminar la versión instalada? [SI (enter) ó NO]: " confirm;
-  else
-    if [ $version = $goversion ];then
-      echo "La versión: go${version} ya se encuentra instalada!";
-      exit 2;
-    else
-      echo "Se reemplazará la versión: go${goversion} por go${version}!";
-      read -p "Desea eliminar la versión: ${goversion}? [SI (enter) ó NO]: " confirm;
-    fi
+if [ ! -z "$homegoi" ] && [ -d ${homegoi} ]; then
+  if [ ! -d ${homegoi}'/bin' ]; then
+    mkdir -p $homegoi'/bin'  
   fi
-  echo "confirmación: "$confirm;
-  if [ "$confirm" = '' -o "$confirm" = 's' -o "$confirm" = 'si' -o "$confirm" = 'SI' -o "$confirm" = 'S' ]; then
-    
-    rm -fr ${GOROOT:-/usr/local/go}
-  else
-    echo "Actualización INTERRUMPIDA.";
-    exit 2;
+  if [ ! -d ${homegoi}'/src' ]; then
+    mkdir -p $homegoi'/src'  
   fi
+  if [ ! -d ${homegoi}'/instaladores' ]; then
+    mkdir -p $homegoi'/instaladores';  
+  fi
+
+  HOMEGO=$homegoi/go;
+  HOMEGOI=$homegoi/instaladores;
+
 
 else
-  echo "NO se encuentra versión de GO instalada!";
+  HOMEGO=$HOME/go;
+  HOMEGOI=$HOMEGO/instaladores;
+
+  if [ ! -d ${HOMEGO} ]; then
+    mkdir -p $HOMEGO/bin;
+    mkdir -p $HOMEGO/src;    
+  fi
+
+  if [ ! -d ${HOMEGOI} ]; then
+    mkdir $HOMEGOI;
+  fi
 
 fi
 
-#exit 10;
-
-#Instalar versión indicada.
-archi="${homegoi}/go${version}.linux-amd64.tar.gz";
-echo "Instalando versión: go${version} desde el archivo ${archi} ...";
-tar xzf ${archi} -C ${DIR};
 
 
-# Configurar entorno para Golang
-sh ./configurar-go.sh;
+#Descargar instalador.
+
+sh ./descargar-go.sh $version $HOMEGOI
+exit_code=$?
+if [ $exit_code = 0 ]; then
+  echo "Descarga COMPLETA"
+
+elif [ $exit_code = 1 ]; then
+  echo "Descarga FALLIDA"
+  exit 1;
+fi
+
+#Instalar versión descargada
+#goversion=$(go version | cut -d " " -f3 | cut -c 3-);
+#goversion=$(go version | cut -d " " -f3 | sed -e 's/^..//');
+sudo -k;
+echo "Se requieren permisos para continuar, ingrese su credencial sudo.";
+#sudo sh ./instalar-act-go.sh ${version} ${HOMEGOI} ${goversion};
+sudo sh ./instalar-inst-go.sh ${version} ${HOMEGOI};
+exit_code=$?
+if [ $exit_code = 0 ]; then
+  echo "Instalación COMPLETA."
+else
+  echo "Instalación FALLIDA."
+  exit 1;
+fi
 
 sudo -k
+echo "Reinicia tu sesión de usuario para verificar la instalación o actualización!";
+exit 0;

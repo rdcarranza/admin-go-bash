@@ -1,13 +1,26 @@
 #!/bin/bash
 
-version=$1;
+version=$1; #parametro requerido
+homegoi=$2; #parametro opcional
+
+#Verificar parametro1
 if [ -z "$version" ]; then
-archi="go1.21.5.linux-amd64.tar.gz"
+    echo "ERROR: en la descarga del instalador, verifique la versión ingresada y vuelva a intentar"
+    exit 1;
 else
-archi="go${version}.linux-amd64.tar.gz"
+    archi="go${version}.linux-amd64.tar.gz"
 fi
 
-diri=$HOME/go/instaladores;
+
+#Verificar parametro2
+
+if [ -z "$homegoi" ]; then
+    diri=$HOME/go/instaladores;
+else
+    diri=$homegoi;
+fi
+
+#diri=$HOME/go/instaladores;
 
 URL="https://go.dev/dl/"$archi;
 wget -N -P $diri ${URL};

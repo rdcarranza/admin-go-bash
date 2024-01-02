@@ -39,7 +39,7 @@ goversion=$(go version | cut -d " " -f3 | cut -c 3-);
 #goversion=$(go version | cut -d " " -f3 | sed -e 's/^..//');
 sudo -k;
 echo "Se requieren permisos para continuar, ingrese su credencial sudo.";
-sudo sh ./instalar-go.sh ${version} ${HOMEGOI} ${goversion};
+sudo sh ./instalar-act-go.sh ${version} ${HOMEGOI} ${goversion};
 exit_code=$?
 if [ $exit_code = 0 ]; then
   echo "Instalación COMPLETA."
