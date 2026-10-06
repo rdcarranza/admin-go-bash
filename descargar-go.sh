@@ -65,9 +65,9 @@ if [ -z "$version" ]; then
 else
     #archi="go${version}.linux-amd64.tar.gz"
     if [[ "${GOARCH}" == "arm" ]]; then
-        archi="go${VERSION}.${GOOS}-armv${GOARM}l.tar.gz"
+        archi="go${version}.${GOOS}-armv${GOARM}l.tar.gz"
     else
-        archi="go${VERSION}.${GOOS}-${GOARCH}.tar.gz"
+        archi="go${version}.${GOOS}-${GOARCH}.tar.gz"
     fi
 fi
 
