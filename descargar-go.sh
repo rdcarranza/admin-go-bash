@@ -2,13 +2,57 @@
 
 version=$1; #parametro requerido
 homegoi=$2; #parametro opcional
+OS="$(uname -s | tr '[:upper:]' '[:lower:]')"
+
+case "$(uname -m)" in
+    x86_64)
+        GOARCH=amd64
+        ;;
+    aarch64)
+        GOARCH=arm64
+        ;;
+    armv6l)
+        GOARCH=arm
+        GOARM=6
+        ;;
+    armv7l)
+        GOARCH=arm
+        GOARM=7
+        ;;
+    ppc64le)
+        GOARCH=ppc64le
+        ;;
+    s390x)
+        GOARCH=s390x
+        ;;
+    riscv64)
+        GOARCH=riscv64
+        ;;
+    *)
+        echo "Arquitectura no soportada: $(uname -m)" >&2
+        exit 1
+        ;;
+esac
+
+echo "Sistema : $(uname -s)"
+echo "Machine : $(uname -m)"
+echo "OS       : $OS"
+echo "GOARCH  : $GOARCH"
+echo "GOARM    : ${GOARM:-}"
+
+#[[ -n "${GOARM:-}" ]] && echo "GOARM   : $GOARM"
 
 #Verificar parametro1
 if [ -z "$version" ]; then
     echo "ERROR: en la descarga del instalador, verifique la versión ingresada y vuelva a intentar"
     exit 1;
 else
-    archi="go${version}.linux-amd64.tar.gz"
+    #archi="go${version}.linux-amd64.tar.gz"
+    if [[ "${GOARCH}" == "arm" ]]; then
+        archi="go${VERSION}.${OS}-armv${GOARM}l.tar.gz"
+    else
+        archi="go${VERSION}.${OS}-${GOARCH}.tar.gz"
+    fi
 fi
 
 
