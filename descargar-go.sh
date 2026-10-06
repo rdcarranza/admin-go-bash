@@ -2,7 +2,23 @@
 
 version=$1; #parametro requerido
 homegoi=$2; #parametro opcional
-OS="$(uname -s | tr '[:upper:]' '[:lower:]')"
+#OS="$(uname -s | tr '[:upper:]' '[:lower:]')"
+
+case "$(uname -s)" in
+    Linux)
+        GOOS="linux"
+        ;;
+    Darwin)
+        GOOS="darwin"
+        ;;
+    FreeBSD)
+        GOOS="freebsd"
+        ;;
+    *)
+        echo "Sistema operativo no soportado: $(uname -s)" >&2
+        exit 1
+        ;;
+esac
 
 case "$(uname -m)" in
     x86_64)
@@ -36,7 +52,7 @@ esac
 
 echo "Sistema : $(uname -s)"
 echo "Machine : $(uname -m)"
-echo "OS       : $OS"
+echo "GOOS       : $GOOS"
 echo "GOARCH  : $GOARCH"
 echo "GOARM    : ${GOARM:-}"
 
@@ -49,9 +65,9 @@ if [ -z "$version" ]; then
 else
     #archi="go${version}.linux-amd64.tar.gz"
     if [[ "${GOARCH}" == "arm" ]]; then
-        archi="go${VERSION}.${OS}-armv${GOARM}l.tar.gz"
+        archi="go${VERSION}.${GOOS}-armv${GOARM}l.tar.gz"
     else
-        archi="go${VERSION}.${OS}-${GOARCH}.tar.gz"
+        archi="go${VERSION}.${GOOS}-${GOARCH}.tar.gz"
     fi
 fi
 
