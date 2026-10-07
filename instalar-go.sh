@@ -68,7 +68,7 @@ if [ -z "$version" ]; then
   echo "ERROR: verifique la versión ingresada y vuelva a intentar."
   exit 1;
 else
-  if [[ "${GOARCH}" == "arm" ]]; then
+  if [ "${GOARCH}" == "arm" ]; then
       archi="${version}.${GOOS}-armv${GOARM}l"
   else
       archi="${version}.${GOOS}-${GOARCH}"
