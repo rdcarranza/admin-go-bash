@@ -22,11 +22,11 @@ GOBIN="${GOROOT}/bin"
 # Verificar si existe una versión anterior
 confirm="";
 if [ -d ${GOROOT} ]; then
-  if [ $goversion = "" ]; then
+  if [ "$goversion" = "" ]; then
     echo "Se instalará la versión: go${version}!";
     read -p "Desea eliminar la versión instalada? [SI (enter) ó NO]: " confirm;
   else
-    if [ $version = $goversion ];then
+    if [ "$version" = "$goversion" ];then
       echo "La versión: go${version} ya se encuentra instalada!";
       exit 2;
     else
