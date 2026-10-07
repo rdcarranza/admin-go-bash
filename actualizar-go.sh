@@ -7,6 +7,72 @@ if [ $(id -u) -eq 0 ]; then
   exit 1
 fi
 
+case "$(uname -s)" in
+    Linux)
+        GOOS="linux"
+        ;;
+    Darwin)
+        GOOS="darwin"
+        ;;
+    FreeBSD)
+        GOOS="freebsd"
+        ;;
+    *)
+        echo "Sistema operativo no soportado: $(uname -s)" >&2
+        exit 1
+        ;;
+esac
+
+case "$(uname -m)" in
+    x86_64)
+        GOARCH=amd64
+        ;;
+    aarch64)
+        GOARCH=arm64
+        ;;
+    armv6l)
+        GOARCH=arm
+        GOARM=6
+        ;;
+    armv7l)
+        GOARCH=arm
+        GOARM=7
+        ;;
+    ppc64le)
+        GOARCH=ppc64le
+        ;;
+    s390x)
+        GOARCH=s390x
+        ;;
+    riscv64)
+        GOARCH=riscv64
+        ;;
+    *)
+        echo "Arquitectura no soportada: $(uname -m)" >&2
+        exit 1
+        ;;
+esac
+
+echo "Sistema : $(uname -s)"
+echo "Machine : $(uname -m)"
+echo "GOOS       : $GOOS"
+echo "GOARCH  : $GOARCH"
+echo "GOARM    : ${GOARM:-}"
+
+#[[ -n "${GOARM:-}" ]] && echo "GOARM   : $GOARM"
+
+#Validar parametro1
+if [ -z "$version" ]; then
+  echo "ERROR: verifique la versión ingresada y vuelva a intentar."
+  exit 1;
+else
+  if [[ "${GOARCH}" == "arm" ]]; then
+      archi="${version}.${GOOS}-armv${GOARM}l"
+  else
+      archi="${version}.${GOOS}-${GOARCH}"
+  fi
+fi
+
 #Configuración de usuario
 
 HOMEGO=$HOME/go;
@@ -23,7 +89,7 @@ fi
 
 #Descargar instalador.
 
-sh ./descargar-go.sh $version
+sh ./descargar-go.sh $archi $HOMEGOI
 exit_code=$?
 if [ $exit_code = 0 ]; then
   echo "Descarga COMPLETA"

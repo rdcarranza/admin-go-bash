@@ -1,7 +1,8 @@
 #!/bin/bash
 version=$1
-homegoi=$2
-goversion=$3 #parametro opcional.
+arch=$2
+homegoi=$3
+goversion=$4 #parametro opcional.
 
 #if [ ! $EUID -e 0 ]; then
 if [ ! $(whoami) = "root" ]; then
@@ -43,7 +44,7 @@ fi
 #exit 10;
 
 #Instalar versión indicada.
-archi="${homegoi}/go${version}.linux-amd64.tar.gz";
+archi="${homegoi}/go${arch}.tar.gz";
 echo "Instalando versión: go${version} desde el archivo ${archi} ...";
 tar xzf ${archi} -C ${DIR};
 
