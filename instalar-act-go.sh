@@ -2,7 +2,7 @@
 version=$1
 arch=$2
 homegoi=$3
-goversion=$4 #parametro opcional.
+goversion=$4
 
 #if [ ! $EUID -e 0 ]; then
 if [ ! $(whoami) = "root" ]; then
@@ -10,15 +10,6 @@ if [ ! $(whoami) = "root" ]; then
   echo "Intenta con el comando: sudo sh instalar-go.sh"
   exit 1
 fi
-
-#verificar si existe alguna versión instalada
-gv=$(go version);
-if [ "$goversion" != "$gv" ]; then
-  goversion="$gv";
-  echo "Version instalada: go${goversion}";  
-fi
-
-#si existe versión instalada pedir confirmación y eliminarla.
 
 DIR='/usr/local'
 GOROOT="${DIR}/go"
