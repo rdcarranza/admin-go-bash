@@ -12,6 +12,11 @@ if [ ! $(whoami) = "root" ]; then
 fi
 
 #verificar si existe alguna versión instalada
+gv=$(go version);
+if [ "$goversion" != "$gv" ]; then
+  goversion="$gv";
+  echo "Version instalada: go${goversion}";  
+fi
 
 #si existe versión instalada pedir confirmación y eliminarla.
 
