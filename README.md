@@ -18,6 +18,20 @@
 - Configura el `PATH` para todos los usuarios del sistema.
 - Pide privilegios (`sudo`) solo en el paso que los necesita.
 
+---
+
+## Ventajas  
+
+Diseñado para gestionar e instalar múltiples versiones de Go de forma sencilla, permitiéndote alternar entre ellas en tu entorno de desarrollo. Su propósito es muy similar al de herramientas populares en otros ecosistemas como nvm (Node Version Manager) para Node.js o pyenv para Python.   
+
+Tener un script de este tipo ofrece varias ventajas clave:
+ 1. Gestión y cambio rápido de versiones (Switching): Aunque Go es retrocompatible, a veces necesitas probar cómo se comporta tu aplicación o una librería específica bajo una versión exacta del compilador (por ejemplo, validar si funciona en la versión anterior o en la más reciente). Con un administrador de este tipo, puedes cambiar de versión con un simple comando en la terminal sin tener que desinstalar y volver a descargar manualmente desde la página oficial.
+ 2. Pruebas de compatibilidad local: Si mantienes varios proyectos de Go en tu máquina y algunos son más antiguos o dependen de características introducidas en versiones específicas, este script te permite aislar y probar cada proyecto con su versión correspondiente del entorno de ejecución sin conflictos en el sistema operativo.
+ 3. Instalación limpia y automatizada: Instalar Go manualmente en Linux o macOS a veces requiere descargar el archivo comprimido .tar.gz, descomprimirlo en la ruta correcta (como /usr/local/go) y configurar las variables de entorno (PATH, GOPATH) en archivos como .bashrc o .zshrc. Un script automatiza todo este proceso tedioso dejándolo listo para usarse en segundos.
+ 4. Independencia de los repositorios del sistema operativoLos administradores de paquetes tradicionales de Linux (apt, pacman, dnf) a menudo se quedan muy desactualizados y ofrecen versiones de Go viejas. Este script te permite instalar directamente las versiones oficiales más recientes proporcionadas por el equipo de Go de forma limpia en tu directorio de usuario, sin necesidad de permisos de administrador (sudo) para cada actualización.
+
+En resumen, su mayor ventaja es ahorrarte tiempo al administrar el ciclo de vida de las herramientas de Go en tu computadora de desarrollo.
+
 ## Requisitos
 
 - Linux `amd64` (x86_64)
