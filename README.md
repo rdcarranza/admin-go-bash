@@ -5,6 +5,7 @@
 ![Bash](https://img.shields.io/badge/Bash-4EAA25?logo=gnubash&logoColor=white)
 ![Go](https://img.shields.io/badge/Go-cualquier%20versi%C3%B3n-00ADD8?logo=go&logoColor=white)
 ![Platform](https://img.shields.io/badge/Linux-amd64-FCC624?logo=linux&logoColor=black)
+![Linux arm64](https://img.shields.io/badge/Linux-arm64-FCC624?logo=linux&logoColor=black)
 ![License](https://img.shields.io/badge/license-AGPL--3.0-blue)
 
 ---
